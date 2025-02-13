@@ -1,0 +1,16 @@
+name: attendance-app
+service:
+  name: attendance-web
+  ports:
+    - port: 8000
+      protocol: http
+  env:
+    - key: DJANGO_SECRET_KEY
+      value: "your-secure-secret-key"
+    - key: DJANGO_DEBUG
+      value: "False"
+  docker:
+    image: shaikat688/attendance-app:latest
+  persistence:
+    - path: /app/db.sqlite3
+      size: 1Gi

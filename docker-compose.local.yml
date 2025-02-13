@@ -1,0 +1,33 @@
+version: '3.8'
+
+services:
+  web:
+    build: .
+    ports:
+      - "8000:8000"
+    volumes:
+      - type: bind
+        source: ./attendance
+        target: /app
+      - type: bind
+        source: ./data/db
+        target: /app/data/db
+      - type: bind
+        source: ./data/media
+        target: /app/data/media
+      - type: volume
+        source: staticfiles
+        target: /app/staticfiles
+    environment:
+      - DJANGO_SECRET_KEY=insecure-dev-key-123
+      - DJANGO_DEBUG=True
+      - DJANGO_ALLOWED_HOSTS=localhost 127.0.0.1
+    command: >
+      bash -c "python manage.py makemigrations &&
+               python manage.py migrate &&
+               rm -rf /app/staticfiles/* &&
+               python manage.py collectstatic --noinput &&
+               python manage.py runserver 0.0.0.0:8000"
+
+volumes:
+  staticfiles:

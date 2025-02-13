@@ -1,0 +1,102 @@
+{# templates/register.html #}
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Register - Smart Attendance System{% endblock %}
+
+{% block extra_head %}
+<style>
+    .camera-container {
+        position: relative;
+        width: 100%;
+        max-width: 640px;
+        height: auto;
+        margin: 0 auto;
+        border-radius: 1rem;
+        overflow: hidden;
+        backdrop-filter: blur(10px);
+        background: rgba(255, 255, 255, 0.1);
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        transition: transform 0.3s ease-in-out;
+    }
+    .camera-container:hover {
+        transform: scale(1.05);
+    }
+    #video {
+        width: 100%;
+        height: auto;
+        object-fit: cover;
+    }
+    #canvas {
+        display: none;
+    }
+    .glass-effect {
+        backdrop-filter: blur(10px);
+        background: rgba(255, 255, 255, 0.1);
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="max-w-3xl mx-auto bg-white bg-opacity-50 rounded-xl shadow-md overflow-hidden glass-effect">
+    <div class="p-8">
+        <h2 class="text-3xl font-bold text-white-900 mb-6 text-center">Register New User</h2>
+        
+        <form id="registrationForm" class="space-y-6">
+            {% csrf_token %}
+            <div class="space-y-4">
+                <div>
+                    <label for="username" class="block text-sm font-medium text-white-700">Username</label>
+                    <input type="text" id="username" name="username" required
+                           class="mt-1 block w-full rounded-md border-black-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 transition duration-200 text-black">
+                </div>
+                
+                <div>
+                    <label for="name" class="block text-sm font-medium text-white-700">Full Name</label>
+                    <input type="text" id="name" name="name" required
+                           class="mt-1 block w-full rounded-md border-black-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 transition duration-200 text-black">
+                </div>
+            </div>
+
+            <div class="mt-8">
+                <div class="camera-container">
+                    <video id="video" autoplay playsinline></video>
+                    <canvas id="canvas" width="640" height="480"></canvas>
+                </div>
+            </div>
+
+            <div class="flex justify-center space-x-4">
+                <button type="button" id="captureBtn"
+                        class="bg-blue-500 text-white px-6 py-3 rounded-lg hover:bg-blue-600 transition duration-200 transform hover:scale-105">
+                    Capture Photo
+                </button>
+                <button type="submit"
+                        class="bg-green-500 text-white px-6 py-3 rounded-lg hover:bg-green-600 transition duration-200 transform hover:scale-105">
+                    Register
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_scripts %}
+<script src="{% static 'js/webcam.js' %}"></script>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const video = document.getElementById('video');
+    const canvas = document.getElementById('canvas');
+    const webcam = new WebcamCapture(video, canvas);
+    
+    webcam.start().catch(err => {
+        alert('Error accessing webcam: ' + err.message);
+    });
+
+    document.getElementById('registrationForm').addEventListener('submit', async function(e) {
+        e.preventDefault();
+        await handleRegistration(webcam);
+    });
+});
+</script>
+{% endblock %}

@@ -1,0 +1,33 @@
+{# templates/landing.html #}
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Welcome - Smart Attendance System{% endblock %}
+
+{% block content %}
+<div class="min-h-[80vh] flex items-center justify-center">
+    <div class="max-w-lg w-full glass-card rounded-2xl p-8 animate-fade-in">
+        <div class="text-center space-y-6">
+            <h1 class="text-6xl font-bold text-white tracking-tight">
+                Smart•ID
+            </h1>
+            <p class="text-lg text-white/80">
+                Next-generation attendance tracking with AI powered facial recognition
+            </p>
+            <div class="pt-8 space-y-4">
+                <a href="{% url 'register' %}" 
+                   class="block w-full bg-gradient-to-r from-indigo-600 to-blue-500 text-white px-6 py-4 rounded-xl 
+                   hover:from-indigo-700 hover:to-blue-600 transition-all duration-300 transform hover:scale-105 
+                   font-medium text-lg shadow-lg shadow-indigo-500/25">
+                    Create Account
+                </a>
+                <a href="{% url 'login' %}"
+                   class="block w-full bg-white/10 text-white px-6 py-4 rounded-xl hover:bg-white/20 
+                   transition-all duration-300 transform hover:scale-105 backdrop-blur-sm font-medium text-lg">
+                    Login with Face ID
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
