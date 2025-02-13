@@ -15,10 +15,24 @@
 
 body {
     min-height: 100vh;
-    background: linear-gradient(-45deg, #1E293B, #0F172A, #1E1B4B, #312E81);
+    display: flex;
+    flex-direction: column;
+    background: linear-gradient(to bottom right, #1a1a2e, #16213e);
     background-size: 400% 400%;
     animation: gradient 15s ease infinite;
     color: #fff;
+}
+
+main {
+    flex: 1;
+}
+
+footer {
+    margin-top: auto;
+    width: 100%;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    color: rgba(255, 255, 255, 0.8);
 }
 
 .glass-card {
