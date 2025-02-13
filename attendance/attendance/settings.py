@@ -26,7 +26,7 @@ SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY', 'django-insecure-+__87)o1dcihlz
 DEBUG = os.environ.get('DJANGO_DEBUG', 'False') == 'True'
 
 ALLOWED_HOSTS = ['smartid.up.railway.app', 'localhost', '127.0.0.1']
-CSRF_TRUSTED_ORIGINS = ['smartid.up.railway.app']
+CSRF_TRUSTED_ORIGINS = ['https://smartid.up.railway.app']
 
 if DEBUG:
     SECURE_SSL_REDIRECT = False
