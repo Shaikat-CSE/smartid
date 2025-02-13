@@ -53,4 +53,7 @@ RUN chmod -R 777 /app
 EXPOSE 8000
 
 # Use Gunicorn to run the application
-CMD ["gunicorn", "attendance.wsgi:application", "--bind", "0.0.0.0:8000"]
+CMD ["bash", "-c", "python manage.py makemigrations && \
+                    python manage.py migrate && \
+                    python manage.py create_superuser && \
+                    gunicorn attendance.wsgi:application --bind 0.0.0.0:8000"]
